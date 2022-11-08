@@ -1,0 +1,35 @@
+
+
+import...
+
+public class importQA extends SaveFile {
+
+ protected void importText(String plainText){
+
+  if(TextUtils.isEmpty(plainText){
+   //Throw invalid text error
+   log.e("Invalid Text Error");
+  }
+
+  int lastChar = 0;
+  int counter = 0;
+  String tempQA;
+
+  for(int i=0; i < plainText.length(); i++){
+
+   if(plainText.charAt(i) == ; ){
+    tempQA = plainText.substring(lastChar, i-1);
+    tempQA = tempQA.trim();
+    String[] QuestionAnswer = tempQA.split(",");
+    QuestionAnswer[0 + counter] = QuestionAnswer[0].trim();
+    QuestionAnswer[1 + counter] = QuestionAnswer[0].trim();
+
+    lastChar = i+1;
+    counter += 2;
+   }
+
+   //Save to questionBank
+	
+  }
+ }
+}

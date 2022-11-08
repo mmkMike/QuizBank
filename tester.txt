@@ -1,0 +1,11 @@
+
+
+public class importTester(){
+  public void test1(){
+   importText("");
+  }
+   
+  public void test2(){
+   importText("Lorem ipsum dolor sit amet, consectetur elit; Phasellus sit amet, arcu vel ac nisl");
+  }
+}
