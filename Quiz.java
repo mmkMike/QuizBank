@@ -94,7 +94,7 @@ public class Quiz extends AppCompatActivity {
             TextView currentQuestionTextView = (TextView) findViewById(R.id.currentQuestion);
             currentQuestionTextView.setText(currentQuestion.getQuestion());
             // Display four possible multiple-choice answer (including one correct one)
-            ArrayList<String> possibleAnswers = this.randomlySelectAnswers();
+            ArrayList<String> possibleAnswers = this.randomlySelectAnswers(currentQuestion);
             /* Create a button for each answer and display them all to the user */
             // First Answer (A) Button
             Button aButton = findViewById(R.id.firstAnswer);
