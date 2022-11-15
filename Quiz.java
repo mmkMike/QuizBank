@@ -22,6 +22,7 @@ public class Quiz extends AppCompatActivity {
     private Double score;
     private Integer numQuestionsCorrect;
     private Integer numberOfQuizzesForQuestionBank;
+    private Boolean quizHasBeenStarted;
     // Constructor(s)
     Quiz(ArrayList<Question> questionBankToUse, Integer numberOfQuizzesForQuestionBank) {
         this.questionBank = questionBankToUse;
@@ -29,6 +30,7 @@ public class Quiz extends AppCompatActivity {
         // Default Values for Score-Related Variables
         this.score = -1.0;
         this.numQuestionsCorrect = 1;
+        this.quizHasBeenStarted = false;
     }
     // Methods
     public void setupQuiz() {
@@ -85,40 +87,14 @@ public class Quiz extends AppCompatActivity {
             return;
         }
         // Start Quiz
+        this.quizHasBeenStarted = true;
         for (int i = 0; i < this.numberOfQuestions; ++i) {
             Question currentQuestion = this.currentSetOfQuestionsForMC.get(i);
             // Display question in app
             TextView currentQuestionTextView = (TextView) findViewById(R.id.currentQuestion);
             currentQuestionTextView.setText(currentQuestion.getQuestion());
             // Display four possible multiple-choice answer (including one correct one)
-            ArrayList<String> possibleAnswers = new ArrayList<String>();    // This ArrayList contains the four possible answers that will be shown to the user in the app for a particular question
-            // Randomly pick three incorrect answers from overall question bank
-            Integer min = 0;
-            Integer max = questionBank.size();
-            for (int j = 0; j < 3; ++j) {
-                Integer randomlyGeneratedIndex = (int) ((Math.random() * (max - min)) + min);
-                Question randomQuestion = this.questionBank.get(randomlyGeneratedIndex);
-                String answerFromRandomQuestion = randomQuestion.getAnswer();
-                // Keep randomly picking answers from question bank until a unique answer is found
-                while (possibleAnswers.contains(answerFromRandomQuestion)) {
-                    // Continue while loop if the current question's answer was generated
-                    if (answerFromRandomQuestion == currentQuestion.getAnswer()) {
-                        continue;
-                    }
-                    // Randomly pick another answer
-                    randomlyGeneratedIndex = (int) ((Math.random() * (max - min)) + min);
-                    randomQuestion = this.questionBank.get(randomlyGeneratedIndex);
-                    answerFromRandomQuestion = randomQuestion.getAnswer();
-                }
-                // Add unique answer to "possibleAnswers"
-                possibleAnswers.add(randomQuestion.getAnswer());
-            }
-            // Add correct answer to "possibleAnswers"
-            possibleAnswers.add(currentQuestion.getAnswer());
-            // Randomize "possibleAnswers" ArrayList ten times to get a different order of answers each time
-            for (int j = 0; j < 10; ++j) {
-                Collections.shuffle(possibleAnswers);
-            }
+            ArrayList<String> possibleAnswers = this.randomlySelectAnswers();
             /* Create a button for each answer and display them all to the user */
             // First Answer (A) Button
             Button aButton = findViewById(R.id.firstAnswer);
@@ -136,6 +112,7 @@ public class Quiz extends AppCompatActivity {
             Button quitButton = findViewById(R.id.quitButton);
             quitButton.setText("Quit Quiz");
             if (aButton.isPressed()) {
+                // Case: The first answer (A) has been selected.
                 if (aButton.getText().toString() == currentQuestion.getAnswer()) {
                     // Correct Answer
                     this.numQuestionsCorrect++;
@@ -144,6 +121,7 @@ public class Quiz extends AppCompatActivity {
                     // Display message in app that answer selected is incorrect and move on to next question
                 }
             } else if (bButton.isPressed()) {
+                // Case: The second answer (B) has been selected.
                 if (bButton.getText().toString() == currentQuestion.getAnswer()) {
                     // Correct Answer
                     this.numQuestionsCorrect++;
@@ -152,6 +130,7 @@ public class Quiz extends AppCompatActivity {
                     // Display message in app that answer selected is incorrect and move on to next question
                 }
             } else if (cButton.isPressed()) {
+                // Case: The third answer (C) has been selected.
                 if (cButton.getText().toString() == currentQuestion.getAnswer()) {
                     // Correct Answer
                     this.numQuestionsCorrect++;
@@ -160,6 +139,7 @@ public class Quiz extends AppCompatActivity {
                     // Display message in app that answer selected is incorrect and move on to next question
                 }
             } else if (dButton.isPressed()) {
+                // Case: The fourth answer (D) has been selected.
                 if (dButton.getText().toString() == currentQuestion.getAnswer()) {
                     // Correct Answer
                     this.numQuestionsCorrect++;
@@ -168,10 +148,50 @@ public class Quiz extends AppCompatActivity {
                     // Display message in app that answer selected is incorrect and move on to next question
                 }
             } else if (quitButton.isPressed()) {
+                // Case: The user wants to exit/quit the quiz.
                 // Add prompts to save/not save current quiz
                 // Afterwards, exit from the for loop containing the currently running quiz
             }
         }
+    }
+    private ArrayList<String> randomlySelectAnswers(Question currentQuestion) {
+        /* Purpose: Act as a helper function to randomly select three incorrect answers for a particular question as well as the correct answer. */
+        // Error-Checking (Quiz Hasn't Started Yet)
+        if (this.quizHasBeenStarted == false) {
+            // Essentially, startQuiz() will have to have been called already before this method can be used
+            System.out.println("Error: Quiz has not been started yet.");
+            return null;
+        }
+        ArrayList<String> ret = new ArrayList<String>();    // This ArrayList contains the four possible answers that will be shown to the user in the app for a particular question
+        // Randomly pick three incorrect answers from overall question bank
+        Integer min = 0;
+        Integer max = questionBank.size();
+        for (int j = 0; j < 3; ++j) {
+            Integer randomlyGeneratedIndex = (int) ((Math.random() * (max - min)) + min);
+            Question randomQuestion = this.questionBank.get(randomlyGeneratedIndex);
+            String answerFromRandomQuestion = randomQuestion.getAnswer();
+            // Keep randomly picking answers from question bank until a unique answer is found
+            while (possibleAnswers.contains(answerFromRandomQuestion)) {
+                // Continue while loop if the current question's answer was generated
+                if (answerFromRandomQuestion == currentQuestion.getAnswer()) {
+                    continue;
+                }
+                // Randomly pick another answer
+                randomlyGeneratedIndex = (int) ((Math.random() * (max - min)) + min);
+                randomQuestion = this.questionBank.get(randomlyGeneratedIndex);
+                answerFromRandomQuestion = randomQuestion.getAnswer();
+            }
+            // Add unique answer to "possibleAnswers"
+            possibleAnswers.add(randomQuestion.getAnswer());
+        }
+        // Add correct answer to "possibleAnswers"
+        possibleAnswers.add(currentQuestion.getAnswer());
+        // Randomize "possibleAnswers" ArrayList ten times to get a different order of answers each time
+        for (int j = 0; j < 10; ++j) {
+            Collections.shuffle(possibleAnswers);
+        }
+        // Return possible answers for a particular question
+        return ret;
     }
     public void changeDisplaySettings() {
         /* Purpose: Allow the user to change the font name, font size, and app theme during the taking of a quiz. */
