@@ -1,15 +1,13 @@
 import java.util.ArrayList;
 
 class QuestionBank {
-  public QuestionBank(){
-    ArrayList questionBank = new ArrayList(); 
-  }
-
-  public void viewBank(int i){
-    System.out.println("Debug viewBank method");
+  ArrayList<questionAnswer> questionBank; 
+  
+  public questionAnswer viewBank(int i){
+    return questionBank.get(i);
   }
   public void addQuestion(questionAnswer q){
-    System.out.println("Debug addQuestion");
+    questionBank.add(q);
   }
   public void importQuestion(){
     System.out.println("Debug importQuestion");
