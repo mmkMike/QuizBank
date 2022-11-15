@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
 class QuestionBank {
-  ArrayList<questionAnswer> questionBank; 
+  ArrayList<qna> questionBank; 
   
-  public questionAnswer viewBank(int i){
+  public qna viewBank(int i){
     return questionBank.get(i);
   }
-  public void addQuestion(questionAnswer q){
+  public void addQuestion(qna q){
     questionBank.add(q);
   }
   public void importQuestion(){

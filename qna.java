@@ -1,4 +1,4 @@
-class questionAnswer{
+class qna{
     private String question;
     private String answer;
   
