@@ -87,25 +87,25 @@ public class Quiz extends AppCompatActivity {
         // Start Quiz
         for (int i = 0; i < this.numberOfQuestions; ++i) {
             Question currentQuestion = this.currentSetOfQuestionsForMC.get(i);
-            // Display question
+            // Display question in app
             TextView currentQuestionTextView = (TextView) findViewById(R.id.currentQuestion);
             currentQuestionTextView.setText(currentQuestion.getQuestion());
             // Display four possible multiple-choice answer (including one correct one)
-            ArrayList<String> possibleAnswers = new ArrayList<String>();
-            // Randomly generate three incorrect answers
+            ArrayList<String> possibleAnswers = new ArrayList<String>();    // This ArrayList contains the four possible answers that will be shown to the user in the app for a particular question
+            // Randomly pick three incorrect answers from overall question bank
             Integer min = 0;
             Integer max = questionBank.size();
             for (int j = 0; j < 3; ++j) {
                 Integer randomlyGeneratedIndex = (int) ((Math.random() * (max - min)) + min);
                 Question randomQuestion = this.questionBank.get(randomlyGeneratedIndex);
                 String answerFromRandomQuestion = randomQuestion.getAnswer();
-                // Keep generating answers until a unique answer is found
+                // Keep randomly picking answers from question bank until a unique answer is found
                 while (possibleAnswers.contains(answerFromRandomQuestion)) {
-                    // Continue loop if the current question's answer was generated
+                    // Continue while loop if the current question's answer was generated
                     if (answerFromRandomQuestion == currentQuestion.getAnswer()) {
                         continue;
                     }
-                    // Generate another answer randomly
+                    // Randomly pick another answer
                     randomlyGeneratedIndex = (int) ((Math.random() * (max - min)) + min);
                     randomQuestion = this.questionBank.get(randomlyGeneratedIndex);
                     answerFromRandomQuestion = randomQuestion.getAnswer();
@@ -119,7 +119,7 @@ public class Quiz extends AppCompatActivity {
             for (int j = 0; j < 10; ++j) {
                 Collections.shuffle(possibleAnswers);
             }
-            /* Display possible answers as buttons */
+            /* Create a button for each answer and display them all to the user */
             // First Answer (A) Button
             Button aButton = findViewById(R.id.firstAnswer);
             aButton.setText(possibleAnswers.get(0));
