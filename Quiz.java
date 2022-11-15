@@ -171,7 +171,7 @@ public class Quiz extends AppCompatActivity {
             Question randomQuestion = this.questionBank.get(randomlyGeneratedIndex);
             String answerFromRandomQuestion = randomQuestion.getAnswer();
             // Keep randomly picking answers from question bank until a unique answer is found
-            while (possibleAnswers.contains(answerFromRandomQuestion)) {
+            while (ret.contains(answerFromRandomQuestion)) {
                 // Continue while loop if the current question's answer was generated
                 if (answerFromRandomQuestion == currentQuestion.getAnswer()) {
                     continue;
@@ -181,14 +181,14 @@ public class Quiz extends AppCompatActivity {
                 randomQuestion = this.questionBank.get(randomlyGeneratedIndex);
                 answerFromRandomQuestion = randomQuestion.getAnswer();
             }
-            // Add unique answer to "possibleAnswers"
-            possibleAnswers.add(randomQuestion.getAnswer());
+            // Add unique answer to "ret"
+            ret.add(randomQuestion.getAnswer());
         }
-        // Add correct answer to "possibleAnswers"
-        possibleAnswers.add(currentQuestion.getAnswer());
-        // Randomize "possibleAnswers" ArrayList ten times to get a different order of answers each time
+        // Add correct answer to "ret"
+        ret.add(currentQuestion.getAnswer());
+        // Randomize "ret" ArrayList ten times to get a different order of answers each time
         for (int j = 0; j < 10; ++j) {
-            Collections.shuffle(possibleAnswers);
+            Collections.shuffle(ret);
         }
         // Return possible answers for a particular question
         return ret;
