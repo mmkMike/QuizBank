@@ -1,10 +1,10 @@
 
 
-import...
+//import...
 
 public class importQA extends SaveFile {
 
- protected void importText(String plainText){
+ protected void importText(String plainText, int textType){
 
   if(TextUtils.isEmpty(plainText){
    //Throw invalid text error
@@ -15,21 +15,45 @@ public class importQA extends SaveFile {
   int counter = 0;
   String tempQA;
 
-  for(int i=0; i < plainText.length(); i++){
+  switch(textType){
 
-   if(plainText.charAt(i) == ; ){
-    tempQA = plainText.substring(lastChar, i-1);
-    tempQA = tempQA.trim();
-    String[] QuestionAnswer = tempQA.split(",");
-    QuestionAnswer[0 + counter] = QuestionAnswer[0].trim();
-    QuestionAnswer[1 + counter] = QuestionAnswer[0].trim();
+   case "1":
+    for(int i=0; i < plainText.length(); i++){
 
-    lastChar = i+1;
-    counter += 2;
-   }
+     if(plainText.charAt(i) == ; ){
+      tempQA = plainText.substring(lastChar, i-1);
+      tempQA = tempQA.trim();
+      String[] QuestionAnswer = tempQA.split(",");
+      QuestionAnswer[0 + counter] = QuestionAnswer[0].trim();
+      QuestionAnswer[1 + counter] = QuestionAnswer[0].trim();
 
+      lastChar = i+1;
+      counter += 2;
+     }
+    }
+
+   case "2":
+    for(int i=0; i < plainText.length(); i++){
+
+     if(plainText.charAt(i) == : ){
+      tempQA = plainText.substring(lastChar, i-1);
+      tempQA = tempQA.trim();
+      String[] QuestionAnswer = tempQA.split("\n");
+      QuestionAnswer[0 + counter] = QuestionAnswer[0].trim();
+      QuestionAnswer[1 + counter] = QuestionAnswer[0].trim();
+
+      lastChar = i+1;
+      counter += 2;
+     }
+    }
+  }
+
+   default:
+    break;
+
+   //
    //Save to questionBank
 	
-  }
+
  }
 }
