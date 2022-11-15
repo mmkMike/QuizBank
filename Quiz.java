@@ -1,14 +1,13 @@
-package com.example.quizapp_setupquiz;
+package com.example.quizbank;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.lang.Math;
 
@@ -86,7 +85,93 @@ public class Quiz extends AppCompatActivity {
             return;
         }
         // Start Quiz
-        
+        for (int i = 0; i < this.numberOfQuestions; ++i) {
+            Question currentQuestion = this.currentSetOfQuestionsForMC.get(i);
+            // Display question
+            TextView currentQuestionTextView = (TextView) findViewById(R.id.currentQuestion);
+            currentQuestionTextView.setText(currentQuestion.getQuestion());
+            // Display four possible multiple-choice answer (including one correct one)
+            ArrayList<String> possibleAnswers = new ArrayList<String>();
+            // Randomly generate three incorrect answers
+            Integer min = 0;
+            Integer max = questionBank.size();
+            for (int j = 0; j < 3; ++j) {
+                Integer randomlyGeneratedIndex = (int) ((Math.random() * (max - min)) + min);
+                Question randomQuestion = this.questionBank.get(randomlyGeneratedIndex);
+                String answerFromRandomQuestion = randomQuestion.getAnswer();
+                // Keep generating answers until a unique answer is found
+                while (possibleAnswers.contains(answerFromRandomQuestion)) {
+                    // Continue loop if the current question's answer was generated
+                    if (answerFromRandomQuestion == currentQuestion.getAnswer()) {
+                        continue;
+                    }
+                    // Generate another answer randomly
+                    randomlyGeneratedIndex = (int) ((Math.random() * (max - min)) + min);
+                    randomQuestion = this.questionBank.get(randomlyGeneratedIndex);
+                    answerFromRandomQuestion = randomQuestion.getAnswer();
+                }
+                // Add unique answer to "possibleAnswers"
+                possibleAnswers.add(randomQuestion.getAnswer());
+            }
+            // Add correct answer to "possibleAnswers"
+            possibleAnswers.add(currentQuestion.getAnswer());
+            // Randomize "possibleAnswers" ArrayList ten times to get a different order of answers each time
+            for (int j = 0; j < 10; ++j) {
+                Collections.shuffle(possibleAnswers);
+            }
+            /* Display possible answers as buttons */
+            // First Answer (A) Button
+            Button aButton = findViewById(R.id.firstAnswer);
+            aButton.setText(possibleAnswers.get(0));
+            // Second Answer (B) Button
+            Button bButton = findViewById(R.id.secondAnswer);
+            bButton.setText(possibleAnswers.get(1));
+            // Third Answer (C) Button
+            Button cButton = findViewById(R.id.thirdAnswer);
+            cButton.setText(possibleAnswers.get(2));
+            // Fourth Answer (D) Button
+            Button dButton = findViewById(R.id.fourthAnswer);
+            dButton.setText(possibleAnswers.get(3));
+            // Quit Button
+            Button quitButton = findViewById(R.id.quitButton);
+            quitButton.setText("Quit Quiz");
+            if (aButton.isPressed()) {
+                if (aButton.getText().toString() == currentQuestion.getAnswer()) {
+                    // Correct Answer
+                    this.numQuestionsCorrect++;
+                } else {
+                    // Incorrect Answer
+                    // Display message in app that answer selected is incorrect and move on to next question
+                }
+            } else if (bButton.isPressed()) {
+                if (bButton.getText().toString() == currentQuestion.getAnswer()) {
+                    // Correct Answer
+                    this.numQuestionsCorrect++;
+                } else {
+                    // Incorrect Answer
+                    // Display message in app that answer selected is incorrect and move on to next question
+                }
+            } else if (cButton.isPressed()) {
+                if (cButton.getText().toString() == currentQuestion.getAnswer()) {
+                    // Correct Answer
+                    this.numQuestionsCorrect++;
+                } else {
+                    // Incorrect Answer
+                    // Display message in app that answer selected is incorrect and move on to next question
+                }
+            } else if (dButton.isPressed()) {
+                if (dButton.getText().toString() == currentQuestion.getAnswer()) {
+                    // Correct Answer
+                    this.numQuestionsCorrect++;
+                } else {
+                    // Incorrect Answer
+                    // Display message in app that answer selected is incorrect and move on to next question
+                }
+            } else if (quitButton.isPressed()) {
+                // Add prompts to save/not save current quiz
+                // Afterwards, exit from the for loop containing the currently running quiz
+            }
+        }
     }
     public void changeDisplaySettings() {
         /* Purpose: Allow the user to change the font name, font size, and app theme during the taking of a quiz. */
@@ -99,16 +184,16 @@ public class Quiz extends AppCompatActivity {
             return;
         }
         // Display Score
-        setContentView(R.layout.activity_current_quiz_results);
-        TextView textView = (TextView) findViewById(R.id.textView3);
-        textView.setText(String.valueOf(this.score) + "%");
+        setContentView(R.layout.quiz_results_statistics_view);
+        TextView scorePercentageTextView = (TextView) findViewById(R.id.scorePercentage);
+        scorePercentageTextView.setText(String.valueOf(this.score) + "%");
         // Display Fraction
         // Number of Questions Correct
-        TextView textView2 = (TextView) findViewById(R.id.textView4);
-        textView2.setText(String.valueOf(this.numQuestionsCorrect));
+        TextView numberQuestionsCorrectTextView = (TextView) findViewById(R.id.numberQuestionsCorrect);
+        numberQuestionsCorrectTextView.setText(String.valueOf(this.numQuestionsCorrect));
         // Number of Questions Incorrect
-        TextView textView3 = (TextView) findViewById(R.id.textView5);
-        textView3.setText(String.valueOf((this.numberOfQuestions - this.numQuestionsCorrect)));
+        TextView numberQuestionsIncorrectTextView = (TextView) findViewById(R.id.numberQuestionsIncorrect);
+        numberQuestionsIncorrectTextView.setText(String.valueOf((this.numberOfQuestions - this.numQuestionsCorrect)));
     }
     public void setFontName(String fontNameToAdd) {
         this.fontName = fontNameToAdd;
