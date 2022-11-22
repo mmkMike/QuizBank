@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         // button listener to flashcards button
         Button buttonStartFlashcards = findViewById(R.id.buttonStartFlashcards);
         buttonStartFlashcards.setOnClickListener(v -> {
-            Intent chooseIntent = new Intent(v.getContext(), ChooseActivity.class);
-            v.getContext().startActivity(chooseIntent);
+            Intent startFlashcards = new Intent(v.getContext(), FlashcardsTime.class);
+            v.getContext().startActivity(startFlashcards);
             finish();
         });
 
