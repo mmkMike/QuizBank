@@ -186,6 +186,8 @@ public class Quiz extends AppCompatActivity {
         }
         // When quiz is finished, show results/statistics
         this.showResultsStatistics();
+        // Set quizHasBeenStarted to false after quiz is done
+        this.quizHasBeenStarted = false;
     }
     private ArrayList<String> randomlySelectAnswers(Question currentQuestion) {
         /* Purpose: Act as a helper function to randomly select three incorrect answers for a particular question as well as the correct answer. */
