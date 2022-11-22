@@ -184,7 +184,8 @@ public class Quiz extends AppCompatActivity {
                 // Afterwards, exit from the for loop containing the currently running quiz
             }
         }
-        // When quiz is finished, show results and
+        // When quiz is finished, show results/statistics
+        this.showResultsStatistics();
     }
     private ArrayList<String> randomlySelectAnswers(Question currentQuestion) {
         /* Purpose: Act as a helper function to randomly select three incorrect answers for a particular question as well as the correct answer. */
