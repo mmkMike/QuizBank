@@ -71,13 +71,13 @@ public class Quiz extends AppCompatActivity {
         numberOfQuestionsTextView.setText(numberOfQuestionsString);
         Integer tempNumberOfQuestions;
         EditText numberOfQuestionsEditText = (EditText) findViewById(R.id.numberQuestionsEditText);
-        tempNumberOfQuestions = Integer.valueOf(Integer.valueOf(numberOfQuestionsEditText.getText().toString()));
+        tempNumberOfQuestions = Integer.valueOf(numberOfQuestionsEditText.getText().toString());
         // Error-Checking (tempNumberOfQuestions is <= 0)
         while (tempNumberOfQuestions <= 0) {
             errorMessage = "Error: Invalid number of questions. Please try again.";
             toast = Toast.makeText(context, errorMessage, duration);
             toast.show();
-            tempNumberOfQuestions = Integer.valueOf(Integer.valueOf(numberOfQuestionsEditText.getText().toString()));
+            tempNumberOfQuestions = Integer.valueOf(numberOfQuestionsEditText.getText().toString());
         }
         // Set this instance's numberOfQuestions
         this.numberOfQuestions = tempNumberOfQuestions;
