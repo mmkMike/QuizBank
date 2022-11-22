@@ -99,10 +99,23 @@ public class Quiz extends AppCompatActivity {
     }
     public void startQuiz() {
         /* Purpose: To start the actual multiple-choice quiz for the user. */
+        Context context = getApplicationContext();
+        CharSequence errorMessage;
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast;
         // Error-Checking (currentSetOfQuestionsForMC is empty)
         if (this.currentSetOfQuestionsForMC.isEmpty()) {
-            System.out.println("Error: Questions for this quiz have not been selected yet.");
+            errorMessage = "Error: Questions for this quiz have not been selected yet.";
+            toast = Toast.makeText(context, errorMessage, duration);
+            toast.show();
             return;
+        }
+        // Error-Checking (Quiz has already been started)
+        if (this.quizHasBeenStarted == true) {
+            errorMessage = "Quiz has already been started.\nResuming from last question.";
+            toast = Toast.makeText(context, errorMessage, duration);
+            toast.show();
+            // Insert code here to resume quiz progress
         }
         // Start Quiz
         this.quizHasBeenStarted = true;
