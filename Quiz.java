@@ -2,9 +2,14 @@ package com.example.quizbank;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,31 +40,44 @@ public class Quiz extends AppCompatActivity {
     // Methods
     public void setupQuiz() {
         /* Purpose: Randomly generate quiz questions based on how many the user wants. */
+        Context context = getApplicationContext();
+        CharSequence errorMessage;
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast;
         // Error-Checking (2 quizzes from this quiz's question bank have already been created)
         if (this.numberOfQuizzesForQuestionBank == 2) {
-            System.out.println("Error: Maximum number of quizzes for this question bank (2) have already been created.");
+            errorMessage = "Error: Maximum number of quizzes for this question bank (2) have already been created.";
+            toast = Toast.makeText(context, errorMessage, duration);
+            toast.show();
             return;
         }
         // Error-Checking (questionBank is empty)
         if (questionBank.isEmpty()) {
-            System.out.println("Error: No questions found.\nPlease add some to the question bank and try again.");
+            errorMessage = "Error: No questions found.\nPlease add some to the question bank and try again.";
+            toast = Toast.makeText(context, errorMessage, duration);
+            toast.show();
             return;
         }
         // Error-Checking (questionBank does not have enough questions - aka it only has 1-3 of them)
         if ((questionBank.size() < 4) && (questionBank.size() > 0)) {
-            System.out.println("Error: Question bank does not have more than 4 questions.\nPlease add more and try again.");
+            errorMessage = "Error: Question bank does not have more than 4 questions.\nPlease add more and try again.";
+            toast = Toast.makeText(context, errorMessage, duration);
+            toast.show();
             return;
         }
         // Ask user for number of questions
-        System.out.print("How many questions do you want in this quiz? ");
+        String numberOfQuestionsString = "How many questions do you want in this quiz?";
+        TextView numberOfQuestionsTextView = (TextView) findViewById(R.id.numberQuestionsTextView);
+        numberOfQuestionsTextView.setText(numberOfQuestionsString);
         Integer tempNumberOfQuestions;
-        Scanner scan = new Scanner(System.in);
-        tempNumberOfQuestions = Integer.valueOf(scan.nextLine());
+        EditText numberOfQuestionsEditText = (EditText) findViewById(R.id.numberQuestionsEditText);
+        tempNumberOfQuestions = Integer.valueOf(Integer.valueOf(numberOfQuestionsEditText.getText().toString()));
         // Error-Checking (tempNumberOfQuestions is <= 0)
         while (tempNumberOfQuestions <= 0) {
-            System.out.println("\nError: Invalid number of questions. Please try again.\n");
-            System.out.print("How many questions do you want in this quiz? ");
-            tempNumberOfQuestions = Integer.valueOf(scan.nextLine());
+            errorMessage = "Error: Invalid number of questions. Please try again.";
+            toast = Toast.makeText(context, errorMessage, duration);
+            toast.show();
+            tempNumberOfQuestions = Integer.valueOf(Integer.valueOf(numberOfQuestionsEditText.getText().toString()));
         }
         // Set this instance's numberOfQuestions
         this.numberOfQuestions = tempNumberOfQuestions;
@@ -153,6 +171,7 @@ public class Quiz extends AppCompatActivity {
                 // Afterwards, exit from the for loop containing the currently running quiz
             }
         }
+        // When quiz is finished, show results and
     }
     private ArrayList<String> randomlySelectAnswers(Question currentQuestion) {
         /* Purpose: Act as a helper function to randomly select three incorrect answers for a particular question as well as the correct answer. */
