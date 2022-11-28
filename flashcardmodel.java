@@ -1,4 +1,4 @@
-package com.example.testmaxflashcards;
+package com.example.quizappflashcards;
 
 public class flashcardModel {
 
