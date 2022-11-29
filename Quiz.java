@@ -3,11 +3,13 @@ package com.example.quizbank;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -142,6 +144,8 @@ public class Quiz extends AppCompatActivity {
             // Quit Button
             Button quitButton = findViewById(R.id.quitButton);
             quitButton.setText("Quit Quiz");
+            // Change Display Settings Button
+            Button displaySettingsButton = findViewById(R.id.displaySettingsButton);
             if (aButton.isPressed()) {
                 // Case: The first answer (A) has been selected.
                 if (aButton.getText().toString() == currentQuestion.getAnswer()) {
@@ -182,6 +186,9 @@ public class Quiz extends AppCompatActivity {
                 // Case: The user wants to exit/quit the quiz.
                 // Add prompts to save/not save current quiz
                 // Afterwards, exit from the for loop containing the currently running quiz
+            } else if (displaySettingsButton.isPressed()) {
+                // Case: The user wants to change the display settings
+                this.changeDisplaySettings();
             }
         }
         // When quiz is finished, show results/statistics
@@ -230,6 +237,14 @@ public class Quiz extends AppCompatActivity {
     }
     public void changeDisplaySettings() {
         /* Purpose: Allow the user to change the font name, font size, and app theme during the taking of a quiz. */
+        // Font Name
+        // Font Size
+        // App Theme
+        Switch lightDarkToggle = findViewById(R.id.lightDarkSelect);
+        if (lightDarkToggle.isPressed()) {
+            // Case: Switch to dark mode
+            setTheme(com.google.android.material.R.style.Base_Theme_Material3_Dark);
+        }
     }
     public void showResultsStatistics() {
         /* Purpose: Display results of an quiz to the user. */
