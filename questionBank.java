@@ -1,15 +1,47 @@
+package com.example.quizbank;
+
+import android.appcompat.app.AppCompatActivity;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 
-class QuestionBank {
-  ArrayList<qna> questionBank; 
-  
-  public qna viewBank(int i){
-    return questionBank.get(i);
+public class questionBank extends AppCompActivity {
+
+
+  private ArrayList<Question> questionBank;
+  private int count;
+  @Override
+  public questionBank(){
+    ArrayList<Question> questionBank= new ArrayList<>();
+    count = 0;
   }
-  public void addQuestion(qna q){
-    questionBank.add(q);
+
+  public void removeSelected(int selection){
+    questionBank.remove(selection);
   }
-  public void importQuestion(){
-    System.out.println("Debug importQuestion");
+  public void addQuestion(Question newQuestion){
+    questionBank.add(newQuestion);
+    count++;
+  }
+  public void removeSelection(int selection){
+    questionBank.remove(selection);
+    count--;
+  }
+
+public int getCount(){
+    return count;
+}
+  public String toString(boolean option, int selection){
+    //option selects whether we want to return an answer or a question
+    //using a boolean to only allow two options
+    //if true return question
+    if(option = true){
+      return ("Question: " +  questionBank.get(selection).getQuestion());
+    }
+    else{
+      return("Answer: " + questionBank.get(selection).getAnswer());
+    }
   }
 }
