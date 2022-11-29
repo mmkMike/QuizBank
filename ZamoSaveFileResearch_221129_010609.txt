@@ -1,0 +1,6 @@
+List of documents used when researching the Saving methods:
+- https://www.khanacademy.org/computer-programming/save-code-tutorial/4767981276446720 
+- https://en.scratch-wiki.info/wiki/Saving_Data
+- https://scottlilly.com/learn-c-by-building-a-simple-rpg-index/lesson-19-4-saving-and-loading-the-player-information/
+
+While they aren't directly related to the application we are making, understanding how video games save their information will help me understand how to implement that into our application. While researching, I am worried that our current plans for saving might be out-of-scope with the time that we have left in the semester. I have discussed it with the team, but we are looking for ways to simplify the process. We are planning to save the information as Text files that the application can take and read when in use.

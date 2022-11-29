@@ -2,9 +2,16 @@ package com.example.quizbank;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,31 +42,44 @@ public class Quiz extends AppCompatActivity {
     // Methods
     public void setupQuiz() {
         /* Purpose: Randomly generate quiz questions based on how many the user wants. */
+        Context context = getApplicationContext();
+        CharSequence errorMessage;
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast;
         // Error-Checking (2 quizzes from this quiz's question bank have already been created)
         if (this.numberOfQuizzesForQuestionBank == 2) {
-            System.out.println("Error: Maximum number of quizzes for this question bank (2) have already been created.");
+            errorMessage = "Error: Maximum number of quizzes for this question bank (2) have already been created.";
+            toast = Toast.makeText(context, errorMessage, duration);
+            toast.show();
             return;
         }
         // Error-Checking (questionBank is empty)
         if (questionBank.isEmpty()) {
-            System.out.println("Error: No questions found.\nPlease add some to the question bank and try again.");
+            errorMessage = "Error: No questions found.\nPlease add some to the question bank and try again.";
+            toast = Toast.makeText(context, errorMessage, duration);
+            toast.show();
             return;
         }
         // Error-Checking (questionBank does not have enough questions - aka it only has 1-3 of them)
         if ((questionBank.size() < 4) && (questionBank.size() > 0)) {
-            System.out.println("Error: Question bank does not have more than 4 questions.\nPlease add more and try again.");
+            errorMessage = "Error: Question bank does not have more than 4 questions.\nPlease add more and try again.";
+            toast = Toast.makeText(context, errorMessage, duration);
+            toast.show();
             return;
         }
         // Ask user for number of questions
-        System.out.print("How many questions do you want in this quiz? ");
+        String numberOfQuestionsString = "How many questions do you want in this quiz?";
+        TextView numberOfQuestionsTextView = (TextView) findViewById(R.id.numberQuestionsTextView);
+        numberOfQuestionsTextView.setText(numberOfQuestionsString);
         Integer tempNumberOfQuestions;
-        Scanner scan = new Scanner(System.in);
-        tempNumberOfQuestions = Integer.valueOf(scan.nextLine());
+        EditText numberOfQuestionsEditText = (EditText) findViewById(R.id.numberQuestionsEditText);
+        tempNumberOfQuestions = Integer.valueOf(numberOfQuestionsEditText.getText().toString());
         // Error-Checking (tempNumberOfQuestions is <= 0)
         while (tempNumberOfQuestions <= 0) {
-            System.out.println("\nError: Invalid number of questions. Please try again.\n");
-            System.out.print("How many questions do you want in this quiz? ");
-            tempNumberOfQuestions = Integer.valueOf(scan.nextLine());
+            errorMessage = "Error: Invalid number of questions. Please try again.";
+            toast = Toast.makeText(context, errorMessage, duration);
+            toast.show();
+            tempNumberOfQuestions = Integer.valueOf(numberOfQuestionsEditText.getText().toString());
         }
         // Set this instance's numberOfQuestions
         this.numberOfQuestions = tempNumberOfQuestions;
@@ -81,10 +101,23 @@ public class Quiz extends AppCompatActivity {
     }
     public void startQuiz() {
         /* Purpose: To start the actual multiple-choice quiz for the user. */
+        Context context = getApplicationContext();
+        CharSequence errorMessage;
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast;
         // Error-Checking (currentSetOfQuestionsForMC is empty)
         if (this.currentSetOfQuestionsForMC.isEmpty()) {
-            System.out.println("Error: Questions for this quiz have not been selected yet.");
+            errorMessage = "Error: Questions for this quiz have not been selected yet.";
+            toast = Toast.makeText(context, errorMessage, duration);
+            toast.show();
             return;
+        }
+        // Error-Checking (Quiz has already been started)
+        if (this.quizHasBeenStarted == true) {
+            errorMessage = "Quiz has already been started.\nResuming from last question.";
+            toast = Toast.makeText(context, errorMessage, duration);
+            toast.show();
+            // Insert code here to resume quiz progress
         }
         // Start Quiz
         this.quizHasBeenStarted = true;
@@ -111,6 +144,8 @@ public class Quiz extends AppCompatActivity {
             // Quit Button
             Button quitButton = findViewById(R.id.quitButton);
             quitButton.setText("Quit Quiz");
+            // Change Display Settings Button
+            Button displaySettingsButton = findViewById(R.id.displaySettingsButton);
             if (aButton.isPressed()) {
                 // Case: The first answer (A) has been selected.
                 if (aButton.getText().toString() == currentQuestion.getAnswer()) {
@@ -151,8 +186,15 @@ public class Quiz extends AppCompatActivity {
                 // Case: The user wants to exit/quit the quiz.
                 // Add prompts to save/not save current quiz
                 // Afterwards, exit from the for loop containing the currently running quiz
+            } else if (displaySettingsButton.isPressed()) {
+                // Case: The user wants to change the display settings
+                this.changeDisplaySettings();
             }
         }
+        // When quiz is finished, show results/statistics
+        this.showResultsStatistics();
+        // Set quizHasBeenStarted to false after quiz is done
+        this.quizHasBeenStarted = false;
     }
     private ArrayList<String> randomlySelectAnswers(Question currentQuestion) {
         /* Purpose: Act as a helper function to randomly select three incorrect answers for a particular question as well as the correct answer. */
@@ -195,6 +237,14 @@ public class Quiz extends AppCompatActivity {
     }
     public void changeDisplaySettings() {
         /* Purpose: Allow the user to change the font name, font size, and app theme during the taking of a quiz. */
+        // Font Name
+        // Font Size
+        // App Theme
+        Switch lightDarkToggle = findViewById(R.id.lightDarkSelect);
+        if (lightDarkToggle.isPressed()) {
+            // Case: Switch to dark mode
+            setTheme(com.google.android.material.R.style.Base_Theme_Material3_Dark);
+        }
     }
     public void showResultsStatistics() {
         /* Purpose: Display results of an quiz to the user. */
