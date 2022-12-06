@@ -1,0 +1,63 @@
+package com.example.importexport;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class exportbutton extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.view_export);
+
+        final EditText firstSymbol = (EditText)findViewById(R.id.firstNum);
+        final EditText secondSymbol = (EditText)findViewById(R.id.secondNum);
+
+        final TextView outputBlock = (TextView) findViewById(R.id.outputBlock);
+        outputBlock.setBackgroundResource(R.color.teal_200);
+        outputBlock.setText("waiting");
+
+
+        Button btnAddExport = (Button)findViewById(R.id.addBtnExport);
+
+        btnAddExport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(firstSymbol.getText().toString().isEmpty() || secondSymbol.getText().toString().isEmpty())
+                {
+                    Toast.makeText(getApplicationContext(), "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                }
+                else {
+
+                    String symbol1 = firstSymbol.getText().toString();
+                    String symbol2 = secondSymbol.getText().toString();
+
+                    int lastChar = 0;
+                    int arrayIndex = 0;
+                    String tempQA;
+                    String[] tempArrayQA = new String[2];
+                    String[] ArrayQA = new String[10];
+
+
+                    tempQA = "";
+                    for(int i=0; i<ArrayQA.length;i+=2){
+
+                        tempQA += ArrayQA[i]+""+symbol1;
+                        tempQA += ArrayQA[i+1]+""+symbol2;
+
+
+                    }
+                    Toast.makeText(getApplicationContext(), "Operation Success", Toast.LENGTH_SHORT).show();
+                    outputBlock.setText(tempQA);
+
+
+                }
+            }
+        });
+    }
+}
