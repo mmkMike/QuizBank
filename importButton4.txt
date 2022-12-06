@@ -1,0 +1,88 @@
+package com.example.importexport;
+
+import static java.sql.DriverManager.println;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Vector;
+
+public class button extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.view_import);
+
+        final EditText firstSymbol = (EditText)findViewById(R.id.firstNum);
+        final EditText secondSymbol = (EditText)findViewById(R.id.secondNum);
+        final EditText textBlock = (EditText)findViewById(R.id.textBlock);
+        //final TextView outputQA = new TextView(this);
+        final TextView outputQA = (TextView) findViewById(R.id.outputQA);
+        outputQA.setBackgroundResource(R.color.teal_200);
+        outputQA.setText("waiting");
+
+
+        Button btnAdd = (Button)findViewById(R.id.addBtn);
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(firstSymbol.getText().toString().isEmpty() || secondSymbol.getText().toString().isEmpty()
+                    || textBlock.getText().toString().isEmpty())
+                {
+                    Toast.makeText(getApplicationContext(), "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                }
+                else {
+
+                    String symbol1 = firstSymbol.getText().toString();
+                    String symbol2 = secondSymbol.getText().toString();
+                    String plainText = textBlock.getText().toString();
+
+                    int lastChar = 0;
+                    int arrayIndex = 0;
+                    String tempQA;
+                    String[] tempArrayQA = new String[2];
+                    String[] ArrayQA = new String[10];
+
+                    for(int i=0; i < plainText.length(); i++){
+                        if(plainText.charAt(i)== symbol2.charAt(0) || i == plainText.length()-1){
+                            if(i == plainText.length()-1){
+                                i++;
+                            }
+                            tempQA = plainText.substring(lastChar, i);
+                            tempQA = tempQA.trim();
+                            tempArrayQA = tempQA.split(symbol1);
+                            ArrayQA[arrayIndex]=(tempArrayQA[0].trim());
+                            ArrayQA[1+arrayIndex]= (tempArrayQA[1].trim());
+
+
+
+                            lastChar = i+1;
+                            arrayIndex+=2;
+
+                        }
+
+                    }
+
+                    tempQA = "";
+                    for(int i=0; i<ArrayQA.length; i++){
+
+                        tempQA += ArrayQA[i]+"\n";
+
+
+                    }
+                    Toast.makeText(getApplicationContext(), "Operation Success", Toast.LENGTH_SHORT).show();
+                    outputQA.setText(tempQA);
+
+
+                }
+            }
+        });
+    }
+}
