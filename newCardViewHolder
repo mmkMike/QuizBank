@@ -1,0 +1,50 @@
+import android.view.View;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.R;
+import com.wajahatkarim3.easyflipview.EasyFlipView;
+
+
+public class CardViewHolder extends RecyclerView.ViewHolder {
+
+    private EasyFlipView easyFlipView;
+    private TextView front_text, back_text;
+
+    public EasyFlipView getEasyFlipView() {
+        return easyFlipView;
+    }
+
+    public TextView getFront_text() {
+        return front_text;
+    }
+
+    public TextView getBack_text() {
+        return back_text;
+    }
+
+    // public Button NextButton() {
+        // return NextButton;
+  //  }
+
+    public CardViewHolder (@NonNull View itemView) {
+        super(itemView);
+        easyFlipView = itemView.findViewById(R.id.easyFlipView);
+        front_text = easyFlipView.findViewById(R.id.frontText);
+        back_text = easyFlipView.findViewById(R.id.backText);
+
+        easyFlipView.setOnClickListener(v -> {
+            easyFlipView.flipTheView();
+            easyFlipView.setFlipEnabled(false);
+        });
+    }
+
+}
+// two buttons
+    // first one switch to question and answer (toggle)
+    // second button to go to next question
+    // read tag question1 & answer1
+    // Make tags adaptable "question + 1 " start with i = 1, + 1 to i  on click
+    //

@@ -1,0 +1,100 @@
+package com.example.quizapp380;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+import java.lang.String;
+import java.util.ArrayList;
+import java.io.BufferedReader;
+// import java.io.DataInput;
+import java.io.DataInputStream;
+import java.io.IOException;
+// import java.nio.Buffer;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+// import java.io.FileReader;
+
+public class MainActivity extends Activity {
+    ArrayList<String> question = new ArrayList<>();
+    ArrayList<String> answer = new ArrayList<>();
+    String sCurrentLine;
+    public void start() {
+
+        try {
+            // file system + bufferedreader for android studio
+            // more different than just java (more passthroughs involved)
+            FileInputStream fis = new FileInputStream("test.txt");
+            DataInputStream in = new DataInputStream(fis);
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            while ((sCurrentLine = br.readLine()) != null) {
+                // bufferedreader reads the line and string splits it depending on ":"
+                String[] lineValues = sCurrentLine.split(":");
+                // split into two lines
+                // question = line 0
+                // answer = line 1
+                // arraylists are now completed
+                // goal is to, how can we read these ArrayLists on screen?
+                question.add(lineValues[0]);
+                answer.add(lineValues[1]);
+            }
+            // close bufferedreader, no longer needed
+            in.close();
+            // catch
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    // ArrayList<String> question;
+    // ArrayList<String> answer;
+
+
+    TextView questions;
+   // TextView answers;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        questions = (TextView)findViewById(R.id.question);
+        // answers = (TextView) findViewById(R.id.answer);
+    }
+
+    public void buttonClicked(View v) {
+        printQuestion();
+    }
+
+    //public void toggleButton (View v) {
+      //  printAnswer();
+   // }
+    public void printQuestion(){
+        StringBuilder questionStringBuilder = new StringBuilder();
+        // for a string in the arraylist <question>
+        // appends one by one (increments by button click)
+        // look into ListView solution, might be better for an ArrayList (need ArrayAdapter)
+
+        for (String s : question) {
+            questionStringBuilder.append(s + "\n");
+        }
+        questions.setText(questionStringBuilder.toString());
+    }
+   // Now that we can get a Question showing, how can we get the Answer showing
+    // Have two cards showing up and on that same button click
+    // , apply answers as well, since questions is the only one affected
+    // Both cards will be on screen the both time though so this is concerning. (not typical flashcard format)
+    // Look into visibility toggle
+
+
+
+
+    // public void printAnswer(){
+       // StringBuilder answerStringBuilder = new StringBuilder();
+        //for (String s : answer) {
+          //  answerStringBuilder.append(s + "\n");
+        //}
+    //    answers.setText(answerStringBuilder.toString());
+    //}
+}
+
