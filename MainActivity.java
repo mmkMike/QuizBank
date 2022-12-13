@@ -1,40 +1,86 @@
-package com.example.savemethod;
+package com.example.savingmethod;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
-import com.example.savemethod.R;
-import java.io.IOException;
-import java.io.InputStream;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    TextView textView;
-    Button button;
+    private static final String FILE_NAME = "example.txt";
+
+    EditText mEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView = findViewById(R.id.textView);
-        button = findViewById(R.id.btnReadFile);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String string = "";
-                InputStream inputStream = null;
+
+        mEditText = findViewById(R.id.edit_text);
+    }
+
+    public void save(View v) {
+        String text = mEditText.getText().toString();
+        FileOutputStream fos = null;
+
+        try {
+            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
+            fos.write(text.getBytes());
+
+            mEditText.getText().clear();
+            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE_NAME,
+                    Toast.LENGTH_LONG).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
                 try {
-                    inputStream = getAssets().open("Quotes.txt");
-                    int size = inputStream.available();
-                    byte[] buffer = new byte[size];
-                    inputStream.read(buffer);
-                    string = new String(buffer);
+                    fos.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                textView.setText(string);
             }
-        });
+        }
+    }
+
+    public void load(View v) {
+        FileInputStream fis = null;
+
+        try {
+            fis = openFileInput(FILE_NAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
+
+            while ((text = br.readLine()) != null) {
+                sb.append(text).append("\n");
+            }
+
+            mEditText.setText(sb.toString());
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
