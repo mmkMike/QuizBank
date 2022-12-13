@@ -33,15 +33,8 @@ public class questionBank extends AppCompActivity {
 public int getCount(){
     return count;
 }
-  public String toString(boolean option, int selection){
-    //option selects whether we want to return an answer or a question
-    //using a boolean to only allow two options
-    //if true return question
-    if(option = true){
-      return ("Question: " +  questionBank.get(selection).getQuestion());
-    }
-    else{
-      return("Answer: " + questionBank.get(selection).getAnswer());
-    }
+  public String toString(int selection){
+    //returns both question and answer on seperate lines in order to display properly on listView
+    return questionBank[selection].getQuestion() + "\n" + questionBank[selection].getAnswer();
   }
 }
