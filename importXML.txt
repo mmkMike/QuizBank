@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <EditText
+        android:id="@+id/firstNum"
+        android:layout_width="75dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="50dp"
+        android:background="@color/teal_200"
+        android:ems="10" />
+
+
+    <EditText
+        android:id="@+id/secondNum"
+        android:layout_width="75dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="100dp"
+        android:background="@color/teal_200"
+        android:ems="10" />
+
+
+    <EditText
+        android:id="@+id/textBlock"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="100dp"
+        android:background="@color/teal_200"
+        android:ems="10" />
+
+    <Button
+        android:id="@+id/addBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:text="Add" />
+
+    <TextView
+        android:id="@+id/outputQA"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:ems="10" />
+
+
+</LinearLayout>
