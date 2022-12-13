@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class QuizList extends AppCompatActivity {
+public class QuizListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,8 +18,10 @@ public class QuizList extends AppCompatActivity {
         /* Purpose: Set up quiz. */
         // Error-Checking (Empty Question Bank)
 
+        // Error-Checking (More Than 3 Quizzes)
+
         // Navigate to quiz setup menu
-        Intent setupQuiz = new Intent(this, QuizSetup.class);
+        Intent setupQuiz = new Intent(this, QuizSetupActivity.class);
         startActivity(setupQuiz);
     }
 

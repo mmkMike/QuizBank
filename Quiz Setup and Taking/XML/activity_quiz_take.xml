@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:textSize="30sp"
+        android:padding="8dp"
+        android:layout_marginBottom="40dp"
+        android:id="@+id/textView_currentQuestion"
+        android:text="Current Question"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:textSize="15sp"
+        android:padding="8dp"
+        android:layout_marginBottom="40dp"
+        android:id="@+id/button_firstAnswer"
+        android:layout_below="@+id/textView_currentQuestion"
+        android:text="First Answer"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:textSize="15sp"
+        android:padding="8dp"
+        android:layout_marginBottom="40dp"
+        android:id="@+id/button_secondAnswer"
+        android:layout_below="@+id/button_firstAnswer"
+        android:text="Second Answer"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:textSize="15sp"
+        android:padding="8dp"
+        android:layout_marginBottom="40dp"
+        android:id="@+id/button_thirdAnswer"
+        android:layout_below="@+id/button_secondAnswer"
+        android:text="Third Answer"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:textSize="15sp"
+        android:padding="8dp"
+        android:layout_marginBottom="40dp"
+        android:id="@+id/button_fourthAnswer"
+        android:layout_below="@+id/button_thirdAnswer"
+        android:text="Fourth Answer"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:textSize="15sp"
+        android:padding="8dp"
+        android:layout_marginBottom="40dp"
+        android:id="@+id/button_quitButton"
+        android:layout_below="@+id/button_fourthAnswer"
+        android:text="Quit"
+        android:onClick="exitQuiz"
+        />
+
+</RelativeLayout>
